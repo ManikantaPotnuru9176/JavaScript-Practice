@@ -9,9 +9,6 @@ const print_test = [
 // function that prints the elements of the following array.
 // using map method
 const print_array = (input) =>
-  input.map((ele, i) => {
-    console.log("row " + i);
-    ele.map((ele1) => console.log(ele1));
-  });
+  input.map((ele, i) => ["row " + i].concat(typeof ele === "object" ? ele.map((ele1) => ele1) : ele));
 
-print_array(print_test);
+console.log(print_array(print_test));
