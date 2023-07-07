@@ -115,7 +115,7 @@ select_type.addEventListener("change", () => {
   inputs.appendChild(input);
 
   // Add an additional input element for specific practice questions
-  if (selectedFile === "first.js" || selectedFile === "last.js") {
+  if (selectedFile === "first.js" || selectedFile === "last.js" || selectedFile === "leapYearRange.js") {
     num_input.value = "3";
     inputs.appendChild(num_input);
   }
