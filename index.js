@@ -258,7 +258,6 @@ button.onclick = () => {
 
     // Add the "Code" button if it's not already present
     if (!code_div.hasChildNodes()) code_div.appendChild(button_code);
-  }
 };
 
 // Create an embed element for displaying the code file
