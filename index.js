@@ -59,7 +59,6 @@ const answers = document.getElementById("answer_div");
 
 // Create input, button, and answer elements
 const input = document.createElement("input");
-const input_1 = document.createElement("input");
 const button = document.createElement("button");
 const answer = document.createElement("p");
 
@@ -115,7 +114,7 @@ select_type.addEventListener("change", () => {
   inputs.appendChild(input);
 
   // Add an additional input element for specific practice questions
-  if (selectedFile === "first.js" || selectedFile === "last.js" || selectedFile === "leapYearRange.js") {
+  if (selectedFile === "first.js" || selectedFile === "last.js") {
     num_input.value = "3";
     inputs.appendChild(num_input);
   }
@@ -255,10 +254,6 @@ button.onclick = () => {
   }
 
   // Append the answer to the answer_div element
-  if (
-    dropdown_error_div.innerText.length === 0 &&
-    input_error_div.innerText.length === 0
-  ) {
     answers.appendChild(answer);
 
     // Add the "Code" button if it's not already present
