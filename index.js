@@ -59,7 +59,6 @@ const answers = document.getElementById("answer_div");
 
 // Create input, button, and answer elements
 const input = document.createElement("input");
-const input_1 = document.createElement("input");
 const button = document.createElement("button");
 const answer = document.createElement("p");
 
@@ -255,15 +254,10 @@ button.onclick = () => {
   }
 
   // Append the answer to the answer_div element
-  if (
-    dropdown_error_div.innerText.length === 0 &&
-    input_error_div.innerText.length === 0
-  ) {
     answers.appendChild(answer);
 
     // Add the "Code" button if it's not already present
     if (!code_div.hasChildNodes()) code_div.appendChild(button_code);
-  }
 };
 
 // Create an embed element for displaying the code file
