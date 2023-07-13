@@ -98,7 +98,7 @@ fileNames.forEach((file) => {
 
   if (name !== "") {
     const script = document.createElement("script");
-    script.src = "js/" + name;
+    script.src = "./js/" + name;
     document.body.appendChild(script);
   }
 });
@@ -324,7 +324,7 @@ const displayCode = () => {
 
   // Get the file name and construct the file path
   const { name } = selectedFileObj;
-  const filePath = "/js/" + name;
+  const filePath = "./js/" + name;
 
   // Create an <embed> element to display the code
   const embed = document.createElement("embed");
