@@ -1,281 +1,337 @@
-/*
-- This JavaScript code is responsible for populating a
-dropdown menu with JavaScript practice questions.
-- When a question is selected, it dynamically generates
-input fields based on the selected question and input type.
-- The code also includes an "Answer" button that performs actions
-based on the selected question and input, and displays the answer.
-- Additionally, there is a "Code" button that displays the
-code file corresponding to the selected question.
-*/
-
-// Get the list of file names for JavaScript practice questions
 const fileNames = [
-  "", // Placeholder option
-  "isArray.js",
-  "arrayClone.js",
-  "first.js",
-  "last.js",
-  "arrayToSting.js",
-  "insertDashes.js",
-  "arraySort.js",
-  "mostFrequent.js",
-  "swapCase.js",
-  "printArray.js",
-  "sumOfSquares.js",
-  "sumAndProduct.js",
-  "removeDuplicates.js",
-  "ordinalWay.js",
-  "leapYearRange.js",
-  "arrayShuffle.js",
-  "binarySearch.js",
-  "sumOfTwoArrays.js",
-  "duplicateValues.js",
-  "flattenNested.js",
+  { name: "isArray.js", inputCount: 1 },
+  { name: "arrayClone.js", inputCount: 1 },
+  { name: "first.js", inputCount: 2 },
+  { name: "last.js", inputCount: 2 },
+  { name: "arrayToString.js", inputCount: 2 },
+  { name: "insertDashes.js", inputCount: 1 },
+  { name: "arraySort.js", inputCount: 1 },
+  { name: "mostFrequent.js", inputCount: 1 },
+  { name: "swapCase.js", inputCount: 1 },
+  { name: "printArray.js", inputCount: 1 },
+  { name: "sumOfSquares.js", inputCount: 1 },
+  { name: "sumAndProduct.js", inputCount: 1 },
+  { name: "removeDuplicates.js", inputCount: 1 },
+  { name: "ordinalWay.js", inputCount: 1 },
+  { name: "leapYearRange.js", inputCount: 2 },
+  { name: "arrayShuffle.js", inputCount: 1 },
+  { name: "binarySearch.js", inputCount: 2 },
+  { name: "sumOfTwoArrays.js", inputCount: 2 },
+  { name: "duplicateValues.js", inputCount: 1 },
+  { name: "flattenNestedArray.js", inputCount: 1 },
+  { name: "union.js", inputCount: 2 },
+  { name: "difference.js", inputCount: 2 },
+  { name: "filterArray.js", inputCount: 1 },
+  { name: "arrayObjectsSort.js", inputCount: 1 },
+  { name: "twoSum.js", inputCount: 2 },
+  { name: "propertyValue.js", inputCount: 2 },
+  { name: "longestCommonSubstring.js", inputCount: 1 },
+  { name: "numStringRange.js", inputCount: 3 },
+  { name: "mergeArray.js", inputCount: 2 },
+  { name: "removeArrayElement.js", inputCount: 2 },
+  { name: "contains.js", inputCount: 2 },
+  { name: "emptyArray.js", inputCount: 1 },
+  { name: "nthLargest.js", inputCount: 2 },
+  { name: "randomItem.js", inputCount: 1 },
+  { name: "arrayFilled.js", inputCount: 2 },
+  { name: "arrayFilledString.js", inputCount: 2 },
+  { name: "move.js", inputCount: 3 },
+  { name: "filterArrayValues.js", inputCount: 1 },
+  { name: "arrayRange.js", inputCount: 2 },
+  { name: "rangeBetween.js", inputCount: 2 },
+  { name: "unique.js", inputCount: 2 },
+  { name: "unzip.js", inputCount: 2 },
+  { name: "createObjectFromKey.js", inputCount: 2 },
+  { name: "uniqueElements.js", inputCount: 1 },
+  { name: "permutations.js", inputCount: 1 },
+  { name: "compactObject.js", inputCount: 1 },
+  { name: "primeArray.js", inputCount: 1 },
+  { name: "thirdSmallest.js", inputCount: 1 },
+  { name: "sumInMixedData.js", inputCount: 1 },
+  { name: "factorChain.js", inputCount: 1 },
+  { name: "findNan.js", inputCount: 1 },
+  { name: "countArrays.js", inputCount: 1 },
 ];
 
-const file_dropdown = document.getElementById("file_dropdown");
-// Get the "dropdown" select element from the HTML code
-const select = document.createElement("select");
+const types = ["Number", "String", "Array", "Object"];
 
-// Populate the dropdown select element with options
-fileNames.forEach((optionText) => {
-  const option = document.createElement("option");
-  option.value = optionText;
-  option.text = optionText;
-  select.appendChild(option);
-});
-
-// Set the initial value and text for the first option in the dropdown
-select[0].value = "";
-select[0].text = "Select Question";
-
-file_dropdown.appendChild(select);
-
-// Get the necessary HTML elements for input, buttons, and answers
-const inputs = document.getElementById("input_div");
-const buttons = document.getElementById("button_div");
-const answers = document.getElementById("answer_div");
-
-// Create input, button, and answer elements
-const input = document.createElement("input");
-const button = document.createElement("button");
-const answer = document.createElement("p");
-
-// Set attributes and values for the input, button, and answer elements
-button.innerHTML = "Answer";
-input.type = "text";
-input.id = "input";
-input.placeholder = "Enter input here";
-answer.id = "answer";
-
-// Create an array of input types for the second dropdown select element
-const types = [
-  "", // Placeholder option
-  "Number",
-  "String",
-  "Array",
-  "Object",
-];
-
-const type_dropdown = document.getElementById("type_dropdown");
-// Create the second dropdown select element for selecting input types
-const select_type = document.createElement("select");
-
-// Populate the input type dropdown select element with options
-types.forEach((optionText) => {
-  const option = document.createElement("option");
-  option.value = optionText;
-  option.text = optionText;
-  select_type.appendChild(option);
-});
-
-// Set the initial value and text for the first option in the input type dropdown
-select_type[0].value = "";
-select_type[0].text = "Select Input Type";
-
-// Event listener for the "dropdown" select element
-select.addEventListener("change", () => {
-  selectedFile = select.options[select.selectedIndex].value;
-  console.log("Selected file:", selectedFile);
-  resetElement();
-  type_dropdown.appendChild(select_type);
-});
-
-// Create an additional input element for certain practice questions
-const num_input = document.createElement("input");
-num_input.type = "text";
-num_input.placeholder = "Enter a number to print the number of elements";
-num_input.id = "num_input";
-
-// Event listener for the input type dropdown select element
-select_type.addEventListener("change", () => {
-  selectedType = select_type.options[select_type.selectedIndex].value;
-  inputs.appendChild(input);
-
-  // Add an additional input element for specific practice questions
-  if (selectedFile === "first.js" || selectedFile === "last.js") {
-    num_input.value = "3";
-    inputs.appendChild(num_input);
-  }
-
-  // Set default values for input elements based on selected question and input type
-  if (selectedFile === "leapYearRange.js") {
-    num_input.value = "2023";
-    inputs.appendChild(num_input);
-  }
-  switch (selectedType) {
-    case "Number":
-      selectedFile === "leapYearRange.js"
-        ? (input.value = "1900")
-        : (input.value = "123");
-      break;
-    case "String":
-      selectedFile === "leapYearRange.js"
-        ? (input.value = "1900")
-        : (input.value = '"ManiKanta"');
-      break;
-    case "Array":
-      input.value = "[1, 2, 3, 4, 5]";
-      break;
-    case "Object":
-      input.value = '{"name":"Mani","gender":"male","age":"20"}';
-      break;
-  }
-  buttons.appendChild(button);
-});
-
-// Get the code_div element from the HTML code
-const code_div = document.getElementById("code_div");
-// Get the input_error_div element from the HTML code
-const input_error_div = document.getElementById("input_error_div");
-// Get the dropdown_error_div element from the HTML code
-const dropdown_error_div = document.getElementById("dropdown_error_div");
-
-// Create a "Code" button element
-const button_code = document.createElement("button");
-button_code.innerHTML = "Code";
-
-// Event listener for the "Answer" button
-button.onclick = () => {
-  answers.classList.add("clicked");
-  const input = document.getElementById("input").value;
-  console.log(input);
-  console.log(selectedFile);
-
-  // Perform actions based on the selected file and input
-  switch (selectedFile) {
-    case "isArray.js":
-        answer.innerHTML =
-          "Answer: " + JSON.stringify(is_array(JSON.parse(input)));
-      break;
-    case "arrayClone.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(array_clone(JSON.parse(input)));
-      break;
-    case "first.js":
-      const first_num = document.getElementById("num_input").value;
-      answer.innerHTML =
-        "Answer: " +
-        JSON.stringify(first(JSON.parse(input), JSON.parse(first_num)));
-      break;
-    case "last.js":
-      const last_num = document.getElementById("num_input").value;
-      answer.innerHTML =
-        "Answer: " +
-        JSON.stringify(last(JSON.parse(input), JSON.parse(last_num)));
-      break;
-    case "arrayToString.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(array_to_string(JSON.parse(input)));
-      break;
-    case "insertDashes.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(insert_dashes(JSON.parse(input)));
-      break;
-    case "arraySort.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(array_sort(JSON.parse(input)));
-      break;
-    case "mostFrequent.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(most_frequent(JSON.parse(input)));
-      break;
-    case "swapCase.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(swap_case(JSON.parse(input)));
-      break;
-    case "printArray.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(print_array(JSON.parse(input)));
-      break;
-    case "sumOfSquares.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(sum_of_squares(JSON.parse(input)));
-      break;
-    case "sumAndProduct.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(sum_and_product(JSON.parse(input)));
-      break;
-    case "removeDuplicates.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(remove_duplicates(JSON.parse(input)));
-      break;
-    case "ordinalWay.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(ordinal_way(JSON.parse(input)));
-      break;
-    case "leapYearRange.js":
-      const end = document.getElementById("num_input").value;
-      answer.innerHTML =
-        "Answer: " +
-        JSON.stringify(leap_year_range(JSON.parse(input), JSON.parse(end)));
-      break;
-    case "arrayShuffle.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(array_shuffle(JSON.parse(input)));
-      break;
-    case "binarySearch.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(binary_search(JSON.parse(input)));
-      break;
-    case "sumOfTwoArrays.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(sum_of_two_arrays(JSON.parse(input)));
-      break;
-    case "duplicateValues.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(duplicate_values(JSON.parse(input)));
-      break;
-    case "flattenNested.js":
-      answer.innerHTML =
-        "Answer: " + JSON.stringify(flatten_nested_array(JSON.parse(input)));
-      break;
-  }
-
-  // Append the answer to the answer_div element
-    answers.appendChild(answer);
-
-    // Add the "Code" button if it's not already present
-    if (!code_div.hasChildNodes()) code_div.appendChild(button_code);
+// Create option element
+const createOption = (value, text) => {
+  const optionElement = document.createElement("option");
+  optionElement.value = value;
+  optionElement.text = text;
+  return optionElement;
 };
 
-// Create an embed element for displaying the code file
-const embed = document.createElement("embed");
-
-// Event listener for the "Code" button
-button_code.onclick = () => {
-  embed.src = "Js/" + selectedFile;
-  code_div.appendChild(embed);
+// Create select element
+const createSelect = () => {
+  const selectElement = document.createElement("select");
+  return selectElement;
 };
 
-// Function to reset input elements
-const resetElement = () => {
-  select_type.value = "";
-  input.remove();
-  num_input.remove();
-  embed.remove();
-  button.remove();
-  answer.remove();
-  button_code.remove();
+// Create input element
+const createInput = () => {
+  const inputElement = document.createElement("input");
+  return inputElement;
+};
+
+// Get DOM elements
+const fileDropdownDiv = document.getElementById("file_dropdown");
+const inputDiv = document.getElementById("input_div");
+const typeDropdownDiv = document.getElementById("type_dropdown");
+const answerButtonDiv = document.getElementById("answer_button_div");
+const answerDiv = document.getElementById("answer_div");
+const codeButtonDiv = document.getElementById("code_button_div");
+const codeDiv = document.getElementById("code_div");
+const fileSelectElement = createSelect();
+const typeSelectElements = [];
+
+// Add default options at the beginning
+const defaultFileOption = createOption("", "Select Question");
+fileSelectElement.appendChild(defaultFileOption);
+
+// Create file options and load scripts
+fileNames.forEach((file) => {
+  const { name, inputCount } = file;
+  const fileOptionElement = createOption(name, name);
+  fileSelectElement.appendChild(fileOptionElement);
+
+  if (name !== "") {
+    const script = document.createElement("script");
+    script.src = "js/" + name;
+    document.body.appendChild(script);
+  }
+});
+
+// Add file select element to the DOM
+fileDropdownDiv.appendChild(fileSelectElement);
+
+// Function to reset the form
+const resetForm = () => {
+  inputDiv.innerHTML = "";
+
+  // Remove type dropdown
+  typeDropdownDiv.innerHTML = "";
+
+  // Remove answer button and answer display
+  answerButtonDiv.innerHTML = "";
+  answerDiv.innerHTML = "";
+
+  answerDiv.classList.remove("clicked");
+
+  // Remove code button and code display
+  codeButtonDiv.innerHTML = "";
+  codeDiv.innerHTML = "";
+};
+
+// Event listener for file select element
+fileSelectElement.addEventListener("change", () => {
+  resetForm();
+
+  const selectedFile = fileSelectElement.value;
+
+  // Clear previous input fields and type dropdowns
+  inputDiv.innerHTML = "";
+  typeDropdownDiv.innerHTML = "";
+  answerButtonDiv.innerHTML = "";
+  answerDiv.innerHTML = "";
+
+  if (selectedFile !== "") {
+    const selectedFileObj = fileNames.find(
+      (file) => file.name === selectedFile
+    );
+    const { inputCount } = selectedFileObj;
+
+    for (let i = 0; i < inputCount; i++) {
+      const inputElement = createInput();
+      const typeSelectElement = createSelect();
+      const defaultTypeOption = createOption("", "Select Input Type");
+      typeSelectElement.appendChild(defaultTypeOption);
+      typeSelectElements.push(typeSelectElement);
+
+      inputDiv.appendChild(inputElement);
+      inputDiv.appendChild(typeSelectElement);
+
+      // Create type options
+      types.forEach((type) => {
+        const typeOptionElement = createOption(type, type);
+        typeSelectElement.appendChild(typeOptionElement);
+      });
+
+      // Set default input based on selected type
+      typeSelectElement.addEventListener("change", () => {
+        answerButtonDiv.innerHTML = "";
+        answerDiv.innerHTML = "";
+        answerDiv.classList.remove("clicked");
+
+        // Remove code button and code display
+        codeButtonDiv.innerHTML = "";
+        codeDiv.innerHTML = "";
+        const selectedType = typeSelectElement.value;
+        if (selectedType === "Number") {
+          inputElement.value = 32123;
+        } else if (selectedType === "String") {
+          inputElement.value = '"ManiKanta"';
+        } else if (selectedType === "Array") {
+          inputElement.value = "[1, 11, 2, 22, 3, 33, 4, 44, 5, 55]";
+        } else if (selectedType === "Object") {
+          inputElement.value =
+            '{"name": "mani", "age": "21", "gender": "male"}';
+        }
+        checkInputsFilled();
+      });
+    }
+  }
+});
+
+// Arrow function to check if all inputs are filled and valid
+const checkInputsFilled = () => {
+  const inputElements = inputDiv.querySelectorAll("input");
+  const typeSelectElements = inputDiv.querySelectorAll("select");
+
+  const allInputsFilled = Array.from(inputElements).every(
+    (inputElement) => inputElement.value.trim() !== ""
+  );
+
+  const allInputsValid = Array.from(typeSelectElements).every(
+    (typeSelectElement, index) => {
+      const inputElement = inputElements[index];
+      const selectedType = typeSelectElement.value;
+      const inputValue = inputElement.value.trim();
+
+      // Arrow functions for input validation
+      const isNumberInputValid = (value) => !isNaN(Number(value));
+      const isStringInputValid = (value) => /^(['"])([^\1]*)\1$/.test(value);
+      const isArrayInputValid = (value) => {
+        try {
+          const parsedInput = JSON.parse(value);
+          return Array.isArray(parsedInput);
+        } catch (error) {
+          return false;
+        }
+      };
+      const isObjectInputValid = (value) => {
+        try {
+          const parsedInput = JSON.parse(value);
+          return typeof parsedInput === "object" && !Array.isArray(parsedInput);
+        } catch (error) {
+          return false;
+        }
+      };
+
+      if (selectedType === "") {
+        return false;
+      } else if (selectedType === "Number") {
+        return isNumberInputValid(inputValue);
+      } else if (selectedType === "String") {
+        return isStringInputValid(inputValue);
+      } else if (selectedType === "Array") {
+        return isArrayInputValid(inputValue);
+      } else if (selectedType === "Object") {
+        return isObjectInputValid(inputValue);
+      }
+
+      return true;
+    }
+  );
+
+  if (allInputsFilled && allInputsValid) {
+    // Create and display the answer button
+    const answerButton = document.createElement("button");
+    answerButton.innerText = "Run";
+    answerButton.addEventListener("click", displayAnswer);
+    answerButtonDiv.innerHTML = "";
+    answerButtonDiv.appendChild(answerButton);
+  } else {
+    answerButtonDiv.innerHTML = "";
+    answerDiv.innerHTML = "";
+  }
+};
+
+// Add event listener to input elements
+inputDiv.addEventListener("input", checkInputsFilled);
+
+// Function to display the answer
+const displayAnswer = () => {
+  const selectedFile = fileSelectElement.value;
+  const inputElements = inputDiv.querySelectorAll("input");
+
+  // Find the selected file object
+  const selectedFileObj = fileNames.find((file) => file.name === selectedFile);
+  if (!selectedFileObj) return;
+
+  // Get the corresponding function name and input count
+  const { name, inputCount } = selectedFileObj;
+
+  const functionName = name
+    .slice(0, name.length - 3)
+    .split("")
+    .map((ele) => (ele.toUpperCase() === ele ? "_" + ele.toLowerCase() : ele))
+    .join("");
+
+  // Collect input values from input elements
+  const inputValues = Array.from(inputElements)
+    .slice(0, inputCount)
+    .map((inputElement) => inputElement.value.trim());
+  
+  // Create a <code> element to display the result
+  const resultElement = document.createElement("code");
+
+  let result;
+  try {
+    // Call the function with the input values
+    if (inputValues.length === 1)
+      result = eval(functionName + "(JSON.parse(...inputValues))");
+    else if (inputValues.length === 2)
+      result = eval(
+        functionName +
+          "(JSON.parse(inputValues[0]), JSON.parse(inputValues[1]))"
+      );
+    else if (inputValues.length === 3)
+      result = eval(
+        functionName +
+          "(JSON.parse(inputValues[0]), JSON.parse(inputValues[1]), JSON.parse(inputValues[2]))"
+      );
+  } catch (e) {
+    result = "Error: " + e.message;
+    resultElement.style.color = "red";
+  }
+
+  resultElement.textContent = JSON.stringify(result);
+
+  // Append the result element to the answer div
+  answerDiv.classList.add("clicked");
+  answerDiv.innerHTML = "";
+  answerDiv.appendChild(resultElement);
+
+  if (!codeButtonDiv.hasChildNodes()) {
+    // Create a new code button
+    const newCodeButton = document.createElement("button");
+    newCodeButton.innerText = "Code";
+    newCodeButton.addEventListener("click", displayCode);
+
+    // Append the new code button to the answer div
+    codeButtonDiv.appendChild(newCodeButton);
+  }
+};
+
+const displayCode = () => {
+  const selectedFile = fileSelectElement.value;
+
+  // Find the selected file object
+  const selectedFileObj = fileNames.find((file) => file.name === selectedFile);
+  if (!selectedFileObj) return;
+
+  // Get the file name and construct the file path
+  const { name } = selectedFileObj;
+  const filePath = "/js/" + name;
+
+  // Create an <embed> element to display the code
+  const embed = document.createElement("embed");
+  embed.src = filePath;
+  embed.type = "text/javascript";
+
+  // Append the <embed> element to the code div
+  codeDiv.innerHTML = "";
+  codeDiv.appendChild(embed);
 };

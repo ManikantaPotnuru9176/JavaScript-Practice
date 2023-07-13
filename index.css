@@ -38,7 +38,7 @@ button {
   cursor: pointer;
 }
 
-#answer {
+#answer_div.clicked {
   margin-top: 20px;
   border: 1px solid #ccc;
   padding: 10px;
@@ -49,8 +49,4 @@ button {
 embed {
   width: 700px;
   height: 300px;
-}
-
-#dropdown_error_div, #input_error_div {
-  color: red;
 }
