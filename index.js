@@ -56,6 +56,7 @@ retrieveData().then((fileNames) => {
   const answerDiv = document.getElementById("answer_div");
   const codeButtonDiv = document.getElementById("code_button_div");
   const codeDiv = document.getElementById("code_div");
+  const questionDiv = document.getElementById("question_div");
   const fileSelectElement = createSelect();
   const typeSelectElements = [];
 
@@ -81,6 +82,8 @@ retrieveData().then((fileNames) => {
 
   // Function to reset the form
   const resetForm = () => {
+    questionDiv.innerHTML = "";
+
     inputDiv.innerHTML = "";
 
     // Remove type dropdown
@@ -103,16 +106,15 @@ retrieveData().then((fileNames) => {
 
     const selectedFile = fileSelectElement.value;
 
-    // Clear previous input fields and type dropdowns
-    inputDiv.innerHTML = "";
-    typeDropdownDiv.innerHTML = "";
-    answerButtonDiv.innerHTML = "";
-    answerDiv.innerHTML = "";
-
     if (selectedFile !== "") {
       const selectedFileObj = fileNames.find(
         (file) => file.name === selectedFile
       );
+
+      const questionElement = document.createElement("h4");
+      questionElement.innerHTML = selectedFileObj.question;
+      questionDiv.appendChild(questionElement);
+
       const { inputCount } = selectedFileObj;
 
       for (let i = 0; i < inputCount; i++) {
